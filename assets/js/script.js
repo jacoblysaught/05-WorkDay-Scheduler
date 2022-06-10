@@ -7,8 +7,22 @@ window.setInterval(function () {
     $('#currentDay').html(moment().format("MMMM Do YYYY, h:mm:ss a"))
 }, 1000);
 
+let saveButton = $('.save-btn');
+console.log(localStorage);
+
+$(".save-btn").on("click", function() {
+    // this sets the users input to the value of the text field closest to the button that was clicked by navigating to the buttons parent element and finding the element with class form-control
+    let userInput = $(this).siblings(".form-control").val();
+    // sets time slot in similar manner but sources the value of the id instead 
+    let timeSlot = $(this).parent().attr("id");
+    // commits both values to the localStorage
+    localStorage.setItem(timeSlot, userInput);
+});
+
+//$('.save-btn').on('click', saveToStorage);
+
 var tasks = {
-    "9": [],
+    "09": [],
     "10": [],
     "11": [],
     "12": [],
@@ -33,7 +47,7 @@ var colorTasks = function() {
         var elementHour = parseInt($(this).attr("id"));
 
         // sets the bg color depending on past, present, and future
-        if (currentHour < elementHour) {
+        if (currentHour > elementHour) {
             $(this).removeClass(["present", "future"]).addClass("past");
         }
         else if (currentHour === elementHour) {
@@ -47,24 +61,3 @@ var colorTasks = function() {
 
 //calls function to work and display the colors
 colorTasks()
-
-// saves input text to localStorage on button click
-$(".saveBtn").click(function (event) {
-    event.preventDefault();
-    var value = $(this).siblings("#myTextarea").val();
-    var time = $(this).parent().attr("id");
-    localStorage.setItem(time, value);
-
-
-    // retrieves value of text if there is any
-    $("#9 .form-control").val(localStorage.getItem("hour9"));
-    $("#10 .form-control").val(localStorage.getItem("hour10"));
-    $("#11 .form-control").val(localStorage.getItem("hour11"));
-    $("#12 .form-control").val(localStorage.getItem("hour12"));
-    $("#13 .form-control").val(localStorage.getItem("hour13"));
-    $("#14 .form-control").val(localStorage.getItem("hour14"));
-    $("#15 .form-control").val(localStorage.getItem("hour15"));
-    $("#16 .form-control").val(localStorage.getItem("hour16"));
-    $("#17 .form-control").val(localStorage.getItem("hour17"));
-
-});
