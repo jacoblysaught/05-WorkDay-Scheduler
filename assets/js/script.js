@@ -10,16 +10,16 @@ window.setInterval(function () {
 let saveButton = $('.save-btn');
 console.log(localStorage);
 
-$(".save-btn").on("click", function() {
+function saveToStorage (event) {
     // this sets the users input to the value of the text field closest to the button that was clicked by navigating to the buttons parent element and finding the element with class form-control
-    let userInput = $(this).siblings(".form-control").val();
+    let userInput = $(event.target).parent().find(".form-control").val();
     // sets time slot in similar manner but sources the value of the id instead 
-    let timeSlot = $(this).parent().attr("id");
+    let timeSlot = $(event.target).parent().find(".form-control").attr("id");
     // commits both values to the localStorage
     localStorage.setItem(timeSlot, userInput);
-});
+};
 
-//$('.save-btn').on('click', saveToStorage);
+$('.save-btn').on('click', saveToStorage);
 
 var tasks = {
     "09": [],
@@ -33,9 +33,9 @@ var tasks = {
     "17": []
 };
 
-var setTasks = function() {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-}
+//var setTasks = function() {
+   // localStorage.setItem("tasks", JSON.stringify(tasks));
+//}
 
 // updates the background of each row based on the time of day
 var colorTasks = function() {
